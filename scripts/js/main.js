@@ -11,10 +11,7 @@
  * When a JSON file is implemented, "graph" key should be deleted (or find a better way)
  ***/
 
-var STOCKS = [
-    {"name": "stockA", "price": 100.0, "risk": 5.0, "inc": true, "graph": chart.data.datasets[0]}, 
-    {"name": "stockB", "price": 50.0, "risk": 7.5, "inc": true, "graph": chart.data.datasets[1]}
-];
+
 // var databaseSize = Object.keys(stockDatabase).length;
 
 // STOCK SIZE REMAINS THE SAME ALL THE TIME
@@ -28,17 +25,21 @@ var millisecond = 1000;
 var decPrec = 2; // Decimal precision
 var minValue = Math.pow(10, -decPrec); // 0.01
 
-var labelLimit = chart.data.labels.length; 
-
+ready();
 setInterval(mainLoop, tickInterval*millisecond);
+
+function ready(){ // init of hud
+    buySellHUD();
+}
+
 
 function mainLoop(){
     stockChange();
     
     stockGraphUpdate();
-
-
 }
+
+// STOCK UPDATE REALM
 
 // NO CHANGE FACTORS FOR NOW, PURE RANDOMNESS
 function stockChange(){
@@ -59,22 +60,6 @@ function stockChange(){
 
     }
 }
-
-// NEEDS SOME POLISHING
-// CONSTANT UPDATES ON DATA SEGMENTS WHEN THEY ARE FULL
-function stockGraphUpdate(){
-    for(let i = 0; i < STOCKS.length; i++)
-    {
-        if(STOCKS[i].graph.data.length == labelLimit)
-        {
-            STOCKS[i].graph.data.shift();
-        }
-        STOCKS[i].graph.data.push(STOCKS[i].price);
-        console.log(stockUpdateYeller(i));
-    }
-    chart.update("none"); // NONE TO DISABLE UGLY ANIMATIONS
-}
-
 
 function floatPrecision(val, power){ // power == decPrec
     let pwr = Math.pow(10, power);
@@ -97,4 +82,20 @@ function stockUpdateYeller(index){ // TEMPORARY toString() method
 
     return "" + stock.name + ": " + ((stock.inc) ? "increased ": "decreased ") +
     "to " + stock.price + " per unit.";
+}
+
+// HUD DESING REALM
+function buySellHUD()
+{
+    let form = document.getElementById("pick-stock-form");
+
+    for(let i = 0; i < STOCKS.length; i++)
+    {
+        let inp = document.createElement("input");
+        inp.type = "radio";
+        inp.name = STOCKS[i].name;
+        form.appendChild(inp);
+
+        inp.innerText = inp.name;
+    }
 }
