@@ -4,13 +4,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="scripts/css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Stock Game</title>
 </head>
 <body>
     <h1>Stock Game</h1>
-    <div class="container">
-        <canvas id="myChart" width="400" height="400"></canvas>
+    <div >
+        <canvas class="container-1" id="myChart" width="400" height="200"></canvas>
+    
+
+        <div class="container-1-btn">
+            <button class="btn btn-success" id="buy-button">Buy</button>
+            <button class="btn btn-danger" id="sell-button">Sell</button>
+        </div>
+
     </div>
     <script src="scripts/js/graph.js">
         

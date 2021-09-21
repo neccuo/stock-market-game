@@ -1,0 +1,15 @@
+.container-1{
+    width: auto 50px;
+    height: auto 50px;
+    display: flex;
+    width: 75%;
+    margin: 0 auto;
+    text-align: center;
+
+}
+
+.container-1-btn{
+    display: flex;
+    padding: 20px;
+    justify-content: space-around;
+}

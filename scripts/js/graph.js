@@ -1,11 +1,17 @@
 // ADD A SYSTEM TO READ DATA FROM A JSON FILE
 
+let foo = [];
+
+for (let i = 0; i < 25; i++) {
+   foo.push(i);
+}
+
 let myChart = document.getElementById("myChart").getContext("2d");
-        var num = 1;
         var chart = new Chart(myChart, {
-            type:"line",
+            type: "line",
+            borderWidth: 100,
             data:{
-                labels:[0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                labels: foo, // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
                 datasets:[{
                     label:"StockA",
                     data:[],

@@ -5,8 +5,14 @@
 // THEIR "RISK" VALUES CAN BE CLOSER TO DO THAT.
 
 
+/***
+ * "graph": chart.data.datasets[0] might  cause problems when STOCKS is going to be extracted from a JSON file
+ * Ordering of the script tags should be JSON -> graph.js -> main.js
+ * When a JSON file is implemented, "graph" key should be deleted (or find a better way)
+ ***/
+
 var STOCKS = [
-    {"name": "stockA", "price": 100.0, "risk": 5.0, "inc": true, "graph": chart.data.datasets[0]},
+    {"name": "stockA", "price": 100.0, "risk": 5.0, "inc": true, "graph": chart.data.datasets[0]}, 
     {"name": "stockB", "price": 50.0, "risk": 7.5, "inc": true, "graph": chart.data.datasets[1]}
 ];
 // var databaseSize = Object.keys(stockDatabase).length;
@@ -66,7 +72,7 @@ function stockGraphUpdate(){
         STOCKS[i].graph.data.push(STOCKS[i].price);
         console.log(stockUpdateYeller(i));
     }
-    chart.update();
+    chart.update("none"); // NONE TO DISABLE UGLY ANIMATIONS
 }
 
 
