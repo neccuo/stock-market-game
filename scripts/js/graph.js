@@ -17,15 +17,15 @@ var chart = new Chart(myChart,
         datasets:
         [
             {
-                label:"StockA",
-                data:[],
+                label: STOCKS[0].name,
+                data:[ STOCKS[0].price ], // only as the first element
                 borderColor: 'rgb(75, 192, 192)',
                 fill: false,
                 tension: 0.1
             },
             {
-                label:"StockB",
-                data:[],
+                label: STOCKS[1].name,
+                data:[ STOCKS[1].price ],
                 borderColor: 'rgb(100, 100, 100)',
                 fill: false,
                 tension: 0.1
@@ -37,6 +37,9 @@ var chart = new Chart(myChart,
 
 
 var labelLimit = chart.data.labels.length; 
+
+var openYeller = false; // Do you want to get constant console update messages about the stock price changes?
+
 
 stockShortCut(); // used for adding a new key to STOCKS to increase readibility...
 // STOCKS[i].graph == chart.data.datasets[i]
@@ -52,9 +55,23 @@ function stockGraphUpdate(){
             STOCKS[i].graph.data.shift();
         }
         STOCKS[i].graph.data.push(STOCKS[i].price);
-        console.log(stockUpdateYeller(i));
+
+        if(openYeller){console.log(stockUpdateYeller(i));} // constant updates
     }
-    chart.update("none"); // NONE TO DISABLE UGLY ANIMATIONS
+    chart.update("none"); // "none" TO DISABLE UGLY ANIMATIONS
+}
+
+
+function stockUpdateYeller(index){ // TEMPORARY toString() method
+    if(STOCKS.length <= index){return null;}
+    let stock = STOCKS[index];
+
+    return "" + stock.name + ": " + ((stock.inc) ? "increased ": "decreased ") +
+    "to " + stock.price + " per unit.";
+}
+
+function toggleYeller(){
+    openYeller = !openYeller;
 }
 
 

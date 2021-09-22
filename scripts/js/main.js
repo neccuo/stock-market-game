@@ -25,6 +25,7 @@ var millisecond = 1000;
 var decPrec = 2; // Decimal precision
 var minValue = Math.pow(10, -decPrec); // 0.01
 
+
 ready();
 setInterval(mainLoop, tickInterval*millisecond);
 
@@ -76,13 +77,7 @@ function upOrDown(){
     else{ return -1; }
 }
 
-function stockUpdateYeller(index){ // TEMPORARY toString() method
-    if(STOCKS.length <= index){return null;}
-    let stock = STOCKS[index];
 
-    return "" + stock.name + ": " + ((stock.inc) ? "increased ": "decreased ") +
-    "to " + stock.price + " per unit.";
-}
 
 // HUD DESING REALM
 function buySellHUD()
