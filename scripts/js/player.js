@@ -1,10 +1,17 @@
 // PLAYER INIT
 
-var PLAYER = {
+var PLAYER = { // By default
     "savings": 1000.0,
     "stock_limit": 50,
     "stock_owned": 0
 };
+
+/*if(localStorage.savings){
+    PLAYER.savings = Number(localStorage.savings);
+}
+else{ 
+    localStorage.savings = Number(1000);
+}*/
 
 // Keys are the stock names, values are the amount owned
 var STOCK_INVENTORY = {}; // Gives the count of every stock of the player

@@ -18,6 +18,12 @@
 // IF THERE IS A LOCKED STOCK,
 // IT WILL CONTINUE TO UPDATE ITSELF ON THE BACKGROUND
 
+if (localStorage.data){ localStorage.data = Number(localStorage.data) + 1; }
+else { localStorage.data = 1; }
+
+document.getElementById("storage-test").innerText =  localStorage.data;
+
+
 
 var tickInterval = 3; // seconds
 var millisecond = 1000;
@@ -28,6 +34,16 @@ var minValue = Math.pow(10, -decPrec); // 0.01
 
 ready();
 setInterval(mainLoop, tickInterval*millisecond);
+
+
+function localStorageReset(){
+    let arr = Object.keys(localStorage);
+    for(let i = 0; i < arr.length; i++)
+    {
+        localStorage.removeItem(arr[i]);
+    }
+
+}
 
 function ready(){ // init of hud
     buySellHUD();
