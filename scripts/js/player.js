@@ -19,6 +19,7 @@ var STOCK_INVENTORY = {}; // Gives the count of every stock of the player
 // DICTIONARIES INSIDE AN ARRAY
 var TRANSACTION_HISTORY = [] // {"process": "buy"/"sell", "stock": stock_name, "unit": 100, "price_ea": stock_price, "price_total": stock_price * unit}
 
+
 init();
 
 function init(){
@@ -42,48 +43,61 @@ function transactionHistoryFill(process, stock, unit, price_ea){
 
 // BUY-SELL REALM
 
-function buy(stock_index, amount){
-    // test realm-0
-    if(stock_index >= STOCKS.length || 0 > stock_index){ alert("Index input is unavailable."); return; }
-    if(0 > amount){ alert("Bad input for amount."); return; }
+var selectedStockIndex = Number(document.getElementById("stock-select").value); // by default, selectedStock = -1
+var buyOrSellAmount = Number(document.getElementById("buy-amount-input").value); // Basically var buyAmount = 1;
 
-    let stock = STOCKS[stock_index];
-    let stock_name = stock.name;
 
-    // test realm-1
-    if(PLAYER.savings < stock.price * amount){ alert("Not enough funds."); return; }
-    if(PLAYER.stock_limit < PLAYER.stock_owned + amount){ alert("Not enough stock."); return; }
-
-    // process realm
-    PLAYER.savings -= stock.price * amount;
-    PLAYER.stock_owned += amount;
-    STOCK_INVENTORY[stock_name] += amount;
-
-    let message = "" + "Successfully bought [" + amount + "] units of [" + stock_name + "] for [" + stock.price + "] funds ea!";
-    console.log(message); 
-
-    transactionHistoryFill("buy", stock_name, amount, stock.price);
+function setSelectedStockIndex(val){
+    selectedStockIndex = Number(val);
 }
 
-function sell(stock_index, amount){
-    // test realm-0
-    if(stock_index >= STOCKS.length || 0 > stock_index){ alert("Index input is unavailable."); return; }
-    if(0 > amount){ alert("Bad input for amount."); return; }
+function setBuyOrSellAmount(val){
+    let num = Number(val);
+    buyOrSellAmount = floatPrecision(num);
 
-    let stock = STOCKS[stock_index];
-    let stock_name = stock.name;
+    // MAKE IT BETTER labelUpdate();
+    /*let label = document.getElementById("buy-amount-input-price-calculation");
+    label.innerText = String(num*STOCKS[selectedStockIndex].price)*/
+}
+
+function showPlayerStats(){}
+
+function buyOrSell(process){
+    // test realm-0
+    if(process != "buy" && process != "sell"){return;} // something bad happened
+    if(selectedStockIndex >= STOCKS.length || 0 > selectedStockIndex){ alert("Index input " + selectedStockIndex + " is unavailable.\nSelect a valid stock first"); return; }
+    if(0 > buyOrSellAmount){ alert("Bad input for amount."); return; }
+
+    let stock = STOCKS[selectedStockIndex];
 
     // test realm-1
-    if(amount > STOCK_INVENTORY[stock_name]){ alert("Not enough inventory to sell " + amount + " units of stocks.")}
+    if(process == "buy"){
+        if(PLAYER.savings < stock.price * buyOrSellAmount){ alert("Not enough funds."); return; }
+        if(PLAYER.stock_limit < PLAYER.stock_owned + buyOrSellAmount){ alert("Not enough stock."); return; }
+        buyProcess(stock, buyOrSellAmount);
+    }else if(process == "sell"){
+        if(buyOrSellAmount > STOCK_INVENTORY[stock.name]){ alert("Not enough inventory to sell " + buyOrSellAmount + " units of stocks."); return;}
+        sellProcess(stock, buyOrSellAmount);
+    }
+    // floatPrecision(PLAYER.savings);
+    // floatPrecision(PLAYER.stock_owned);
+    transactionHistoryFill(process, stock.name, buyOrSellAmount, stock.price);
+}
 
-    //process realm
+function buyProcess(stock, amount){
+    PLAYER.savings -= stock.price * amount;
+    PLAYER.stock_owned += amount;
+    STOCK_INVENTORY[stock.name] += amount;
+
+    let message = "" + "Successfully bought [" + amount + "] units of [" + stock.name + "] for [" + stock.price + "] funds ea!";
+    console.log(message); 
+}
+
+function sellProcess(stock, amount){
     PLAYER.savings += stock.price * amount;
     PLAYER.stock_owned -= amount;
-    STOCK_INVENTORY[stock_name] -= amount;
+    STOCK_INVENTORY[stock.name] -= amount;
 
-    let message = "" + "Successfully sold [" + amount + "] units of [" + stock_name + "] for [" + stock.price + "] funds ea!";
+    let message = "" + "Successfully sold [" + amount + "] units of [" + stock.name + "] for [" + stock.price + "] funds ea!";
     console.log(message); 
-
-    transactionHistoryFill("sell", stock_name, amount, stock.price);
-
 }

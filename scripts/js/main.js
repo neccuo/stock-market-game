@@ -24,14 +24,6 @@ else { localStorage.data = 1; }
 document.getElementById("storage-test").innerText =  localStorage.data;
 
 
-
-var tickInterval = 3; // seconds
-var millisecond = 1000;
-
-var decPrec = 2; // Decimal precision
-var minValue = Math.pow(10, -decPrec); // 0.01
-
-
 ready();
 setInterval(mainLoop, tickInterval*millisecond);
 
@@ -42,7 +34,6 @@ function localStorageReset(){
     {
         localStorage.removeItem(arr[i]);
     }
-
 }
 
 function ready(){ // init of hud
@@ -68,7 +59,7 @@ function stockChange(){
 
         symbol = upOrDown();
         STOCKS[i].price += changeNum * symbol;
-        STOCKS[i].price = floatPrecision(STOCKS[i].price, decPrec);
+        STOCKS[i].price = floatPrecision(STOCKS[i].price);
 
         if(STOCKS[i].price < minValue){ STOCKS[i].price = minValue; }
 
@@ -78,14 +69,6 @@ function stockChange(){
     }
 }
 
-function floatPrecision(val, power){ // power == decPrec
-    let pwr = Math.pow(10, power);
-    let num = val;
-
-    num *= pwr;
-    num = Math.floor(num);
-    return num / pwr;
-}
 
 function upOrDown(){
     let num = Math.random();
@@ -94,19 +77,33 @@ function upOrDown(){
 }
 
 
-
 // HUD DESING REALM
 function buySellHUD()
 {
-    let form = document.getElementById("pick-stock-form");
+    alignStockSelect();
+}
 
-    for(let i = 0; i < STOCKS.length; i++)
+function alignStockSelect(){ // for init
+    let select = document.getElementById("stock-select");
+    
+    for(let inp, i = 0; i < STOCKS.length; i++)
     {
-        let inp = document.createElement("input");
-        inp.type = "radio";
-        inp.name = STOCKS[i].name;
-        form.appendChild(inp);
-
-        inp.innerText = inp.name;
+        inp = document.createElement("option");
+        
+        inp.label = STOCKS[i].name; // for accessability
+        // STOCK INDEX NUMBER IS THE VALUE TO BE TAKEN
+        inp.value = i; // index -1 is reserved for default value
+        inp.innerText = STOCKS[i].name; // for display
+        select.appendChild(inp);
     }
+    if(STOCKS.length == 0){setDefaultOption(select);}
+}
+
+function setDefaultOption(elem){
+    let opt = document.createElement("option");
+    opt.selected = true;
+    opt.value = -1;
+    opt.label = "default";
+    opt.innerText = "--";
+    elem.appendChild(opt);
 }

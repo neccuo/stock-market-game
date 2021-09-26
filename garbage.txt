@@ -1,0 +1,46 @@
+USELESS STUFF
+
+function buy(stock_index, amount){
+    // test realm-0
+    if(stock_index >= STOCKS.length || 0 > stock_index){ alert("Index input is unavailable."); return; }
+    if(0 > amount){ alert("Bad input for amount."); return; }
+
+    let stock = STOCKS[stock_index];
+    let stock_name = stock.name;
+
+    // test realm-1
+    if(PLAYER.savings < stock.price * amount){ alert("Not enough funds."); return; }
+    if(PLAYER.stock_limit < PLAYER.stock_owned + amount){ alert("Not enough stock."); return; }
+
+    // process realm
+    PLAYER.savings -= stock.price * amount;
+    PLAYER.stock_owned += amount;
+    STOCK_INVENTORY[stock_name] += amount;
+
+    let message = "" + "Successfully bought [" + amount + "] units of [" + stock_name + "] for [" + stock.price + "] funds ea!";
+    console.log(message); 
+
+    transactionHistoryFill("buy", stock_name, amount, stock.price);
+}
+
+function sell(stock_index, amount){
+    // test realm-0
+    if(stock_index >= STOCKS.length || 0 > stock_index){ alert("Index input is unavailable."); return; }
+    if(0 > amount){ alert("Bad input for amount."); return; }
+
+    let stock = STOCKS[stock_index];
+    let stock_name = stock.name;
+
+    // test realm-1
+    if(amount > STOCK_INVENTORY[stock_name]){ alert("Not enough inventory to sell " + amount + " units of stocks."); return; }
+
+    //process realm
+    PLAYER.savings += stock.price * amount;
+    PLAYER.stock_owned -= amount;
+    STOCK_INVENTORY[stock_name] -= amount;
+
+    let message = "" + "Successfully sold [" + amount + "] units of [" + stock_name + "] for [" + stock.price + "] funds ea!";
+    console.log(message); 
+
+    transactionHistoryFill("sell", stock_name, amount, stock.price);
+}

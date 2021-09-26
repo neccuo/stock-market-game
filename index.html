@@ -10,18 +10,35 @@
 </head>
 <body>
     <h1>Stock Game: <span id="storage-test">0</span></h1>
-    <div>
-        <canvas class="container-1" id="myChart" width="400" height="200"></canvas>
-        <div class="container-1-btn">
-            <button class="btn btn-success" id="buy-button">Buy</button>
-            <button class="btn btn-danger" id="sell-button">Sell</button>
-        </div>
-        <div id="pick-stock">
-            <form action="" id="pick-stock-form">
-            </form>
-        </div>
+    <div class="container-1">
+        <canvas id="myChart" width="400" height="200"></canvas>
     </div>
-    <script src="scripts/js/stocks.js"></script>
+    <div class="container-1-btn">
+        <button class="btn btn-success" id="buy-button" value="buy"
+        onclick="buyOrSell(this.value)">Buy</button>
+        <button class="btn btn-danger" id="sell-button" value="sell"
+        onclick="buyOrSell(this.value)">Sell</button>
+    </div>
+        
+    <div class="container-1-select" id="pick-stock">
+        <form action="" id="pick-stock-form">
+            <select name="backdrop" id="stock-select"
+            onchange="setSelectedStockIndex(this.value)">
+                <!--<option value="-1" label="default" selected>Select Stock</option> -->         
+            </select>
+        </form>
+    </div>
+
+    <div class="container-1-text-input" id="text-input">
+        <form action="" id="pick-stock-amount">
+            <label>Enter an amount to buy/sell:</label><br>
+            <input type="number" id="buy-amount-input"
+            onchange="setBuyOrSellAmount(this.value)" value="1" min="0" step="1">
+            <label id="buy-amount-input-price-calculation"></label>
+        </form>
+        
+    </div>
+    <script src="scripts/js/utilities.js"></script>
     <script src="scripts/js/graph.js"></script>
     <script src="scripts/js/player.js"></script>
     <script src="scripts/js/main.js"></script> 
