@@ -11,8 +11,9 @@
 <body>
     <h1>Stock Game: <span id="storage-test">0</span></h1>
     <div class="container-1">
-        <canvas id="myChart" width="400" height="200"></canvas>
+        <canvas id="myChart" style="width: 500px !important; height: 300px !important;"></canvas>
     </div>
+    
     <div class="container-1-btn">
         <button class="btn btn-success" id="buy-button" value="buy"
         onclick="buyOrSell(this.value)">Buy</button>
@@ -33,10 +34,19 @@
         <form action="" id="pick-stock-amount">
             <label>Enter an amount to buy/sell:</label><br>
             <input type="number" id="buy-amount-input"
-            onchange="setBuyOrSellAmount(this.value)" value="1" min="0" step="1">
+            onchange="setBuyOrSellAmount(this.value)" value="1" min="0" step="1"><br>
             <label id="buy-amount-input-price-calculation"></label>
         </form>
         
+    </div>
+
+    <div class="container-2">
+    <h2>Player Stats:</h2><br>
+        <div class="container-2-stats">
+            <label>selam 1</label>
+            <label>selam 2</label>
+            <label>selam 3</label>
+        </div>
     </div>
     <script src="scripts/js/utilities.js"></script>
     <script src="scripts/js/graph.js"></script>

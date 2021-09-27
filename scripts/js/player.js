@@ -19,6 +19,8 @@ var STOCK_INVENTORY = {}; // Gives the count of every stock of the player
 // DICTIONARIES INSIDE AN ARRAY
 var TRANSACTION_HISTORY = [] // {"process": "buy"/"sell", "stock": stock_name, "unit": 100, "price_ea": stock_price, "price_total": stock_price * unit}
 
+var selectedStockIndex = Number(document.getElementById("stock-select").value); // by default, selectedStock = -1
+var buyOrSellAmount = Number(document.getElementById("buy-amount-input").value); // Basically var buyAmount = 1;
 
 init();
 
@@ -28,6 +30,8 @@ function init(){
         let stock_name = STOCKS[i].name;
         STOCK_INVENTORY[stock_name] = 0;
     }
+    setSelectedStockIndex(0);
+    setBuyOrSellAmount(1);
 }
 
 function transactionHistoryFill(process, stock, unit, price_ea){
@@ -43,21 +47,26 @@ function transactionHistoryFill(process, stock, unit, price_ea){
 
 // BUY-SELL REALM
 
-var selectedStockIndex = Number(document.getElementById("stock-select").value); // by default, selectedStock = -1
-var buyOrSellAmount = Number(document.getElementById("buy-amount-input").value); // Basically var buyAmount = 1;
-
 
 function setSelectedStockIndex(val){
     selectedStockIndex = Number(val);
+
+    amountLabelUpdate();
 }
 
 function setBuyOrSellAmount(val){
     let num = Number(val);
     buyOrSellAmount = floatPrecision(num);
 
-    // MAKE IT BETTER labelUpdate();
-    /*let label = document.getElementById("buy-amount-input-price-calculation");
-    label.innerText = String(num*STOCKS[selectedStockIndex].price)*/
+    amountLabelUpdate();
+
+}
+
+function amountLabelUpdate(){
+    let label = document.getElementById("buy-amount-input-price-calculation");
+    let msg = "" + buyOrSellAmount + " (amount) x " + floatPrecision(STOCKS[selectedStockIndex].price) + " (price) = " + floatPrecision(buyOrSellAmount*STOCKS[selectedStockIndex].price);
+    // label.innerText = String(buyOrSellAmount*STOCKS[selectedStockIndex].price);
+    label.innerText = msg;
 }
 
 function showPlayerStats(){}

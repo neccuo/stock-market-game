@@ -45,6 +45,8 @@ function mainLoop(){
     stockChange();
     
     stockGraphUpdate();
+
+    amountLabelUpdate()
 }
 
 // STOCK UPDATE REALM

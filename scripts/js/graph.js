@@ -2,7 +2,7 @@
 
 let foo = [];
 
-for (let i = 0; i < 25; i++) {
+for (let i = 0; i < 21; i++) {
    foo.push(i);
 }
 
@@ -11,6 +11,10 @@ var chart = new Chart(myChart,
 {
     type: "line",
     borderWidth: 100,
+    options: {
+        responsive: true,
+        maintainAspectRatio: false
+    },
     data:
     {
         labels: foo, // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
