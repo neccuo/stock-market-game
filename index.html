@@ -16,9 +16,9 @@
     
     <div class="container-1-btn">
         <button class="btn btn-success" id="buy-button" value="buy"
-        onclick="buyOrSell(this.value)">Buy</button>
+        onclick="userAction(this.value)">Buy</button>
         <button class="btn btn-danger" id="sell-button" value="sell"
-        onclick="buyOrSell(this.value)">Sell</button>
+        onclick="userAction(this.value)">Sell</button>
     </div>
         
     <div class="container-1-select" id="pick-stock">
@@ -34,18 +34,32 @@
         <form action="" id="pick-stock-amount">
             <label>Enter an amount to buy/sell:</label><br>
             <input type="number" id="buy-amount-input"
-            onchange="setBuyOrSellAmount(this.value)" value="1" min="0" step="1"><br>
+            onchange="setBuyOrSellAmount(this.value)" value="1" min="0" step="1"> FILL HERE WITH STOCK PRICE<br>
             <label id="buy-amount-input-price-calculation"></label>
         </form>
         
     </div>
 
     <div class="container-2">
-    <h2>Player Stats:</h2><br>
+    <p><b>Player Stats</b></p>
+        <!--Introduce tooltips-->
         <div class="container-2-stats">
-            <label>selam 1</label>
-            <label>selam 2</label>
-            <label>selam 3</label>
+            <div>
+                <label><b>Currency:</b></label>
+                <label id="stat-currency"></label><br>
+            </div>
+            <div>
+                <label><b>Stock Inventory:</b></label><br>
+                <label id="stat-inventory"></label><br>
+            </div>
+            
+
+            
+            <label><b>TEXT:</b></label>
+            <label id=""></label><br>
+            <label><b>TEXT:</b></label>
+            <label id=""></label><br>
+
         </div>
     </div>
     <script src="scripts/js/utilities.js"></script>

@@ -45,8 +45,15 @@ function transactionHistoryFill(process, stock, unit, price_ea){
     TRANSACTION_HISTORY.push(dic);
 }
 
-// BUY-SELL REALM
+function playerValuesPrecision(){
+    /*for(const [key] of Object.entries(PLAYER)){
+        PLAYER[key] = floatPrecision(PLAYER[key]);
+        console.log(PLAYER[key]);
+    }*/
+    PLAYER.savings = floatPrecision(PLAYER.savings);
+}
 
+// BUY-SELL REALM
 
 function setSelectedStockIndex(val){
     selectedStockIndex = Number(val);
@@ -59,7 +66,6 @@ function setBuyOrSellAmount(val){
     buyOrSellAmount = floatPrecision(num);
 
     amountLabelUpdate();
-
 }
 
 function amountLabelUpdate(){

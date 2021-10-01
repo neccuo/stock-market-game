@@ -38,6 +38,7 @@ function localStorageReset(){
 
 function ready(){ // init of hud
     buySellHUD();
+    setStatsHUD();
 }
 
 
@@ -49,18 +50,26 @@ function mainLoop(){
     amountLabelUpdate()
 }
 
+function userAction(val){
+    buyOrSell(val);
+    playerValuesPrecision();
+    setStatsHUD();
+}
+
 // STOCK UPDATE REALM
 
 // NO CHANGE FACTORS FOR NOW, PURE RANDOMNESS
 function stockChange(){
     let changeNum;
+    let init_price;
+    let final_price;
     for(let i = 0; i < STOCKS.length; i++)
     {
-        changeNum = Math.random() * STOCKS[i].risk;
-        // changeNum = floatPrecision(changeNum, decPrec);
-
         symbol = upOrDown();
-        STOCKS[i].price += changeNum * symbol;
+        changeNum = Math.random() * STOCKS[i].risk * symbol;
+        STOCKS[i].percent = devaluationPercentage(STOCKS[i].price, changeNum)
+
+        STOCKS[i].price += changeNum;
         STOCKS[i].price = floatPrecision(STOCKS[i].price);
 
         if(STOCKS[i].price < minValue){ STOCKS[i].price = minValue; }
@@ -71,11 +80,15 @@ function stockChange(){
     }
 }
 
-
 function upOrDown(){
     let num = Math.random();
     if(num > 0.5){ return 1; }
     else{ return -1; }
+}
+
+function devaluationPercentage(initVal, diffVal){
+    if(diffVal == 0){return 0;}
+    return floatPrecision(diffVal/initVal, 3);
 }
 
 
@@ -108,4 +121,23 @@ function setDefaultOption(elem){
     opt.label = "default";
     opt.innerText = "--";
     elem.appendChild(opt);
+}
+
+function setStatsHUD(){
+    let lbl;
+
+    lbl = document.getElementById("stat-currency");
+    lbl.innerText = PLAYER.savings;
+
+    lbl = document.getElementById("stat-inventory");
+    lbl.innerText = showInventory();
+}
+
+function showInventory(){
+    let msg = ""
+    for(const [key, value] of Object.entries(STOCK_INVENTORY)){
+        msg += key + ": " + value + "\n";
+    }
+    console.log(msg); 
+    return msg;
 }

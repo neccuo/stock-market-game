@@ -3,7 +3,7 @@
 let foo = [];
 
 for (let i = 0; i < 21; i++) {
-   foo.push(i);
+   foo.push("");
 }
 
 let myChart = document.getElementById("myChart").getContext("2d");
@@ -23,14 +23,24 @@ var chart = new Chart(myChart,
             {
                 label: STOCKS[0].name,
                 data:[ STOCKS[0].price ], // only as the first element
-                borderColor: 'rgb(75, 192, 192)',
+                borderColor: "rgb(75, 192, 192)",
+                pointBackgroundColor: "rgb(75, 192, 192)",
                 fill: false,
                 tension: 0.1
             },
             {
                 label: STOCKS[1].name,
                 data:[ STOCKS[1].price ],
-                borderColor: 'rgb(100, 100, 100)',
+                borderColor: "rgb(100, 100, 100)",
+                pointBackgroundColor: "rgb(100, 100, 100)",
+                fill: false,
+                tension: 0.1
+            },
+            {
+                label: STOCKS[2].name,
+                data:[ STOCKS[2].price ],
+                borderColor: "rgb(200, 200, 200)",
+                pointBackgroundColor: "rgb(200, 200, 200)",
                 fill: false,
                 tension: 0.1
             }
